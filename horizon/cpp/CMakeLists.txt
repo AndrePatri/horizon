@@ -9,6 +9,7 @@ endif()
 # options
 option(HORIZON_PROFILING OFF "enable profiling features")
 option(ILQR_FLOAT OFF "use float for data representation instead of double")
+option(TESTS OFF "compile tests")
 
 if(${HORIZON_PROFILING})
     add_definitions(-DHORIZON_PROFILING)
@@ -16,7 +17,9 @@ endif()
 if(${ILQR_FLOAT})
     add_definitions(-DILQR_FLOAT)
 endif()
-
+if(${TESTS})
+    add_definitions(-DTESTS)
+endif()
 
 find_package(Eigen3 REQUIRED)
 find_package(casadi 3.5.5 REQUIRED)
@@ -104,15 +107,18 @@ add_custom_target(upload_python_package
     COMMENT "Uploading package ${MODULE_NAME}"
     )
 
-# test executable
-add_executable(ilqr_test src/ilqr_test.cpp)
-target_link_libraries(ilqr_test ilqr)
+if(${TESTS})
+    # test executable
+    add_executable(ilqr_test src/ilqr_test.cpp)
+    target_link_libraries(ilqr_test ilqr)
 
-add_executable(sqp_test src/sqp_test.cpp)
-target_link_libraries(sqp_test sqp)
+    add_executable(sqp_test src/sqp_test.cpp)
+    target_link_libraries(sqp_test sqp)
 
-add_executable(sqp_test2 src/sqp_test2.cpp)
-target_link_libraries(sqp_test2 sqp)
+    add_executable(sqp_test2 src/sqp_test2.cpp)
+    target_link_libraries(sqp_test2 sqp)
 
 
-add_subdirectory(tests)
+    add_subdirectory(tests)
+endif()
+
