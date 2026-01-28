@@ -61,12 +61,8 @@ class Task:
             self.weight_param.assign(self.weight)
 
         elif isinstance(self.weight, List):
-            self.weight_param = []
-            for i_dim in range(len(self.weight)):
-
-                temp_par = self.prb.createParameter(f'{self.name}_weight_{i_dim}', 1)
-                temp_par.assign(self.weight[i_dim])
-                self.weight_param.append(temp_par)
+            self.weight_param = self.prb.createParameter(f'{self.name}_weight_vec', len(self.weight))
+            self.weight_param.assign(self.weight)
 
         elif isinstance(self.weight, dict):
             self.weight_param = dict()
