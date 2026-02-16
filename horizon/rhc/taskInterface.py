@@ -65,6 +65,9 @@ class ProblemInterface:
         # this is called sporadically: we don't really care
         # about printing overheads here
         t = time.time()
+        
+        self.solver_bs.reset() # first reset bootstrap solver
+
         self.solver_bs.solve()
         elapsed = time.time() - t
         print(f'bootstrap solved in {elapsed} s')
