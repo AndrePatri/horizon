@@ -60,34 +60,6 @@ class ProblemInterface:
         self.model.setDynamics()
         self._create_solver(rti)
 
-    def bootstrap(self):
-
-        # this is called sporadically: we don't really care
-        # about printing overheads here
-        t = time.time()
-        
-        self.solver_bs.reset() # first reset bootstrap solver
-
-        self.solver_bs.solve()
-        elapsed = time.time() - t
-        print(f'bootstrap solved in {elapsed} s')
-
-        try:
-            self.solver_rti.print_timings()
-
-        except:
-            pass
-
-        self.solution = self.solver_bs.getSolutionDict()
-
-        # we backup a copy (needs to be deep to work properly)
-        # of the bootstrap, which can be used to reset the controller
-        # if needed
-
-        self.update_bootstrap_from_sol()
-
-        self.bootstrap_solved = True
-
     def update_bootstrap_from_sol(self):
         
         # updates bootstrap backup with latest available solution
@@ -127,6 +99,34 @@ class ProblemInterface:
         self.solution = self.solver_rti.getSolutionDict()
         return check
 
+    def bootstrap(self):
+
+        # this is called sporadically: we don't really care
+        # about printing overheads here
+        t = time.time()
+        
+        self.solver_bs.reset() # first reset bootstrap solver
+
+        self.solver_bs.solve()
+        elapsed = time.time() - t
+        print(f'bootstrap solved in {elapsed} s')
+
+        try:
+            self.solver_rti.print_timings()
+
+        except:
+            pass
+
+        self.solution = self.solver_bs.getSolutionDict()
+
+        # we backup a copy (needs to be deep to work properly)
+        # of the bootstrap, which can be used to reset the controller
+        # if needed
+
+        self.update_bootstrap_from_sol()
+
+        self.bootstrap_solved = True
+        
     def init_inv_dyn_for_res(self):
 
         # we create the inv dynamics for resampling here 
