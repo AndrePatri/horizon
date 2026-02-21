@@ -372,7 +372,9 @@ bool IterativeLQR::line_search(int iter)
     if(!_fp_res->accepted)
     {
         report_result(*_fp_res);
-        std::cout << "[ilqr] line search failed, increasing regularization..\n";
+        if (_verbose) {
+            std::cout << "[ilqr] line search failed, increasing regularization..\n";
+        }
         increase_regularization();
         _fp_accepted = 0;
         return false;
