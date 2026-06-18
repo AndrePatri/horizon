@@ -1,6 +1,7 @@
 from horizon.utils import kin_dyn, mat_storer, resampler_trajectory
 
 from horizon.rhc.tasks.cartesianTask import CartesianTask
+from horizon.rhc.tasks.frameAxisTask import FrameAxisTask
 from horizon.rhc.tasks.contactTask import ContactTask
 from horizon.rhc.tasks.interactionTask import InteractionTask, SurfaceContact, VertexContact
 from horizon.rhc.tasks.rollingTask import RollingTask
@@ -391,6 +392,7 @@ class TaskInterface(ProblemInterface):
         #  --> task_factory.register(CartesianTask.signature(), CartesianTask)
         # uniform the names of these tasks
         task_factory.register('Cartesian', CartesianTask)
+        task_factory.register('FrameAxis', FrameAxisTask)
         task_factory.register('Contact', ContactTask)
         task_factory.register('Wrench', SurfaceContact)
         task_factory.register('VertexForce', VertexContact)
