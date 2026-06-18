@@ -427,8 +427,12 @@ class TaskInterface(ProblemInterface):
         # todo this should probably go in each single task definition --> i don't have the info from the ti then
         shortcuts = {
             'nodes': {'final': self.prb.getNNodes() - 1, 'all': list(range(self.prb.getNNodes()))},
-            # todo: how to choose the value to substitute depending on the item? (indices of q: self.model.nq, indices of f: self.f.size ...)
-            # 'indices': {'floating_base': range(7), 'joints': range(7, self.model.nq + 1)}
+            'indices': {
+                'root_q': list(range(7)),
+                'joints_q': list(range(7, self.model.nq)),
+                'root_v': list(range(6)),
+                'joints_v': list(range(6, self.model.nv)),
+            }
         }
         task_descr_resolved = YamlParser.resolve(task_description, shortcuts)
 
